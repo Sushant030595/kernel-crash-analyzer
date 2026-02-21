@@ -1,0 +1,188 @@
+observed the following messages when issuing a 'clim reboot' on both gen11 and gen12.observed the same behavior with the 05 Nov DEA, 21 Nov DEA, and 04 Dec DEA DVDs. Additionally,  seeing many call traces in the syslog, which were not observed earlier when we performed reboots as well as  “the BIOS has corrupted hw-PMU resources”.                                                                                                                                                                                        Dec 15 16:53:42 NCLIM014 kernel: [   13.094691] CPU: 7 PID: 2244 Comm: insmod Kdump: loaded Tainted: G           OE      6.1.157-clim-2-amd64 #1
+Dec 15 16:53:42 NCLIM014 kernel: [   13.094696] Hardware name: HPE ProLiant DL380 Gen11/ProLiant DL380 Gen11, BIOS 2.50 04/22/2025
+Dec 15 16:53:42 NCLIM014 kernel: [   13.094698] RIP: 0010:nf_register_queue_handler+0x1d/0x30
+Dec 15 16:53:42 NCLIM014 kernel: [   13.094702] Code: cc cc 66 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 48 8b 05 e4 76 27 02 48 85 c0 75 0c 48 89 3d d8 76 27 02 c3 cc cc cc cc <0f> 0b 48 89 3d ca 76 27 02 c3 cc cc cc cc 0f 1f 44 00 00 0f 1f 44
+Dec 15 16:53:42 NCLIM014 kernel: [   13.094705] RSP: 0018:ffffd16c81aebcc8 EFLAGS: 00010282
+Dec 15 16:53:42 NCLIM014 kernel: [   13.094708] RAX: ffffffffc117a580 RBX: ffffffffc117a080 RCX: 000000007fffffff
+Dec 15 16:53:42 NCLIM014 kernel: [   13.094709] RDX: 0000000000000000 RSI: 0000000000000001 RDI: ffffffffc117a580
+Dec 15 16:53:42 NCLIM014 kernel: [   13.094711] RBP: ffff8ced14270000 R08: ffff8ced315fb901 R09: ffff8ced315fb900
+Dec 15 16:53:42 NCLIM014 kernel: [   13.094712] R10: ffffffff83105d62 R11: 0000000000000000 R12: 0000000000000000
+Dec 15 16:53:42 NCLIM014 kernel: [   13.094714] R13: ffff8ced14270000 R14: 0000000100000000 R15: 0000000000000000
+Dec 15 16:53:42 NCLIM014 kernel: [   13.094715] FS:  00007f5b9baf8540(0000) GS:ffff8cf45f9c0000(0000) knlGS:0000000000000000
+Dec 15 16:53:42 NCLIM014 kernel: [   13.094718] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+Dec 15 16:53:42 NCLIM014 kernel: [   13.094719] CR2: 0000556745cb6468 CR3: 000000012be6c001 CR4: 0000000000770ee0
+Dec 15 16:53:42 NCLIM014 kernel: [   13.094721] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+Dec 15 16:53:42 NCLIM014 kernel: [   13.094722] DR3: 0000000000000000 DR6: 00000000fffe07f0 DR7: 0000000000000400
+Dec 15 16:53:42 NCLIM014 kernel: [   13.094724] PKRU: 55555554
+Dec 15 16:53:42 NCLIM014 kernel: [   13.094725] Call Trace:
+Dec 15 16:53:42 NCLIM014 kernel: [   13.094728]  <TASK>
+Dec 15 16:53:42 NCLIM014 kernel: [   13.094730]  cfomnet_init+0x71/0x100 [climfom]
+Dec 15 16:53:42 NCLIM014 kernel: [   13.094740]  ops_init+0x3b/0x150
+Dec 15 16:53:42 NCLIM014 kernel: [   13.094747]  register_pernet_operations+0x110/0x1b0
+Dec 15 16:53:42 NCLIM014 kernel: [   13.094751]  register_pernet_subsys+0x25/0x40
+Dec 15 16:53:42 NCLIM014 kernel: [   13.094754]  cfom_init+0x35c/0x1000 [climfom]
+Dec 15 16:53:42 NCLIM014 kernel: [   13.094764]  ? 0xffffffffc1019000
+Dec 15 16:53:42 NCLIM014 kernel: [   13.094767]  do_one_initcall+0x41/0x210
+Dec 15 16:53:42 NCLIM014 kernel: [   13.094773]  ? kmalloc_trace+0x25/0x90
+Dec 15 16:53:42 NCLIM014 kernel: [   13.094778]  do_init_module+0x4c/0x1f0
+Dec 15 16:53:42 NCLIM014 kernel: [   13.094782]  __do_sys_finit_module+0xb4/0x130
+Dec 15 16:53:42 NCLIM014 kernel: [   13.094786]  do_syscall_64+0x33/0xb0
+Dec 15 16:53:42 NCLIM014 kernel: [   13.094791]  entry_SYSCALL_64_after_hwframe+0x6e/0xd8
+Dec 15 16:53:42 NCLIM014 kernel: [   13.094795] RIP: 0033:0x7f5b9b720fc9
+Dec 15 16:53:42 NCLIM014 kernel: [   13.094798] Code: 00 c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d 97 8e 0d 00 f7 d8 64 89 01 48
+Dec 15 16:53:42 NCLIM014 kernel: [   13.094800] RSP: 002b:00007ffde947ffc8 EFLAGS: 00000246 ORIG_RAX: 0000000000000139
+Dec 15 16:53:42 NCLIM014 kernel: [   13.094803] RAX: ffffffffffffffda RBX: 0000556745cb37f0 RCX: 00007f5b9b720fc9
+Dec 15 16:53:42 NCLIM014 kernel: [   13.094804] RDX: 0000000000000000 RSI: 0000556745cb32a0 RDI: 0000000000000003
+Dec 15 16:53:42 NCLIM014 kernel: [   13.094806] RBP: 0000000000000000 R08: 0000000000000000 R09: 00007ffde9480188
+Dec 15 16:53:42 NCLIM014 kernel: [   13.094807] R10: 0000000000000003 R11: 0000000000000246 R12: 0000556745cb32a0
+Dec 15 16:53:42 NCLIM014 kernel: [   13.094808] R13: 0000000000000000 R14: 0000556745cb37a0 R15: 0000556745cb32a0
+Dec 15 16:53:42 NCLIM014 kernel: [   13.094811]  </TASK>
+Dec 15 16:53:42 NCLIM014 kernel: [   13.094812] ---[ end trace 0000000000000000 ]---
+Dec 15 16:53:42 NCLIM014 kernel: [   13.094815] [CFO] Registering the callbacks
+Dec 15 16:53:42 NCLIM014 kernel: [   13.094817] [CLIMFOM] Successfully inserted into kernel, major dev number 234
+
+Dec 15 16:53:43 NCLIM014 kernel: [   14.037004] Call Trace:
+Dec 15 16:53:43 NCLIM014 kernel: [   14.037005]  <TASK>
+Dec 15 16:53:43 NCLIM014 kernel: [   14.037007]  cfomnet_init+0x71/0x100 [climfom]
+Dec 15 16:53:43 NCLIM014 kernel: [   14.037020]  ops_init+0x3b/0x150
+Dec 15 16:53:43 NCLIM014 kernel: [   14.037025]  setup_net+0x192/0x360
+Dec 15 16:53:43 NCLIM014 kernel: [   14.037029]  copy_net_ns+0x129/0x2b0
+Dec 15 16:53:43 NCLIM014 kernel: [   14.037032]  create_new_namespaces+0x113/0x2e0
+Dec 15 16:53:43 NCLIM014 kernel: [   14.037037]  unshare_nsproxy_namespaces+0x55/0xb0
+Dec 15 16:53:43 NCLIM014 kernel: [   14.037040]  ksys_unshare+0x166/0x3a0
+Dec 15 16:53:43 NCLIM014 kernel: [   14.037044]  __x64_sys_unshare+0xe/0x20
+Dec 15 16:53:43 NCLIM014 kernel: [   14.037047]  do_syscall_64+0x33/0xb0
+Dec 15 16:53:43 NCLIM014 kernel: [   14.037052]  entry_SYSCALL_64_after_hwframe+0x6e/0xd8
+Dec 15 16:53:43 NCLIM014 kernel: [   14.037056] RIP: 0033:0x7fd3bdc91817
+Dec 15 16:53:43 NCLIM014 kernel: [   14.037059] Code: 73 01 c3 48 8b 0d 79 16 0d 00 f7 d8 64 89 01 48 83 c8 ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 b8 10 01 00 00 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d 49 16 0d 00 f7 d8 64 89 01 48
+Dec 15 16:53:43 NCLIM014 kernel: [   14.037061] RSP: 002b:00007ffd6eb051e8 EFLAGS: 00000217 ORIG_RAX: 0000000000000110
+Dec 15 16:53:43 NCLIM014 kernel: [   14.037064] RAX: ffffffffffffffda RBX: 000055731b5cc6b0 RCX: 00007fd3bdc91817
+Dec 15 16:53:43 NCLIM014 kernel: [   14.037065] RDX: 0000000000080000 RSI: 000055731b5aca5d RDI: 0000000040000000
+Dec 15 16:53:43 NCLIM014 kernel: [   14.037067] RBP: 0000000000000005 R08: 0000000000000000 R09: 00007ffd6eb05070
+Dec 15 16:53:43 NCLIM014 kernel: [   14.037068] R10: 0000000000000000 R11: 0000000000000217 R12: 0000000000000000
+Dec 15 16:53:43 NCLIM014 kernel: [   14.037069] R13: 00007ffd6eb073e0 R14: 0000000000000001 R15: 00007ffd6eb05210
+Dec 15 16:53:43 NCLIM014 kernel: [   14.037072]  </TASK>
+Dec 15 16:53:43 NCLIM014 kernel: [   14.037073] ---[ end trace 0000000000000000 ]---
+Dec 15 16:53:44 NCLIM014 kernel: [   14.391744] IPv6: ADDRCONF(NETDEV_CHANGE): iby: link becomes ready
+Dec 15 16:53:44 NCLIM014 systemd[1]: Starting Internet Key Exchange (IKE) Protocol Daemon for IPsec...
+Dec 15 16:53:44 NCLIM014 kernel: [   14.544359] Initializing XFRM netlink socket
+Dec 15 16:53:44 NCLIM014 kernel: [   15.072483] ncsl.ko:2025/12/15 16:53:44.836664:ncsli_init_sgid_attr completes successfully
+
+ec 15 16:53:47 NCLIM014 kernel: [   18.116962] CPU: 6 PID: 409 Comm: kworker/u64:6 Kdump: loaded Tainted: G        W  OE      6.1.157-clim-2-amd64 #1
+Dec 15 16:53:47 NCLIM014 kernel: [   18.116966] Hardware name: HPE ProLiant DL380 Gen11/ProLiant DL380 Gen11, BIOS 2.50 04/22/2025
+Dec 15 16:53:47 NCLIM014 kernel: [   18.116968] Workqueue: ncsl_gen_work ncsli_mmgt_work [ncsl]
+Dec 15 16:53:47 NCLIM014 kernel: [   18.116992] Call Trace:
+Dec 15 16:53:47 NCLIM014 kernel: [   18.116995]  <TASK>
+Dec 15 16:53:47 NCLIM014 kernel: [   18.116997]  dump_stack_lvl+0x45/0x5e
+Dec 15 16:53:47 NCLIM014 kernel: [   18.117005]  __schedule_bug.cold+0x42/0x4e
+Dec 15 16:53:47 NCLIM014 kernel: [   18.117009]  __schedule+0xecc/0x1280
+Dec 15 16:53:47 NCLIM014 kernel: [   18.117014]  ? lock_timer_base+0x61/0x80
+Dec 15 16:53:47 NCLIM014 kernel: [   18.117020]  ? __mod_timer+0x26a/0x400
+Dec 15 16:53:47 NCLIM014 kernel: [   18.117024]  schedule+0x5a/0xd0
+Dec 15 16:53:47 NCLIM014 kernel: [   18.117027]  schedule_timeout+0x88/0x160
+Dec 15 16:53:47 NCLIM014 kernel: [   18.117032]  ? timer_migration_handler+0x90/0x90
+Dec 15 16:53:47 NCLIM014 kernel: [   18.117035]  __wait_for_common+0x90/0x1d0
+Dec 15 16:53:47 NCLIM014 kernel: [   18.117039]  ? usleep_range_state+0x90/0x90
+Dec 15 16:53:47 NCLIM014 kernel: [   18.117045]  cmd_exec+0x675/0xb70 [mlx5_core]
+Dec 15 16:53:47 NCLIM014 kernel: [   18.117141]  mlx5_cmd_do+0x1e/0x40 [mlx5_core]
+Dec 15 16:53:47 NCLIM014 kernel: [   18.117211]  mlx5_create_cq+0x95/0x270 [mlx5_core]
+Dec 15 16:53:47 NCLIM014 kernel: [   18.117286]  mlx5_core_create_cq+0x18/0x30 [mlx5_core]
+Dec 15 16:53:47 NCLIM014 kernel: [   18.117359]  mlx5_ib_create_cq+0x540/0xb60 [mlx5_ib]
+Dec 15 16:53:47 NCLIM014 kernel: [   18.117381]  ? __kmem_cache_alloc_node+0x18c/0x2b0
+Dec 15 16:53:47 NCLIM014 kernel: [   18.117388]  ? ncsli_rs_cq_handler+0x20/0x20 [ncsl]
+Dec 15 16:53:47 NCLIM014 kernel: [   18.117406]  __ib_create_cq+0x9c/0xe0 [ib_core]
+Dec 15 16:53:47 NCLIM014 kernel: [   18.117436]  ncsli_allocate_fset+0x63/0x330 [ncsl]
+Dec 15 16:53:47 NCLIM014 kernel: [   18.117450]  ? xas_store+0x56/0x5d0
+Dec 15 16:53:47 NCLIM014 kernel: [   18.117454]  ? mlx5_core_create_mkey+0x5e/0xf0 [mlx5_core]
+Dec 15 16:53:47 NCLIM014 kernel: [   18.117532]  ? __xa_alloc+0xc0/0x150
+Dec 15 16:53:47 NCLIM014 kernel: [   18.117535]  ? __xa_alloc_cyclic+0x4d/0xf0
+Dec 15 16:53:47 NCLIM014 kernel: [   18.117539]  ? rdma_restrack_add+0x75/0x180 [ib_core]
+Dec 15 16:53:47 NCLIM014 kernel: [   18.117572]  rs_ib_alloc_fmr+0x2bd/0x310 [ncsl]
+Dec 15 16:53:47 NCLIM014 kernel: [   18.117587]  rs_ib_reg_mr+0xe9/0x440 [ncsl]
+Dec 15 16:53:47 NCLIM014 kernel: [   18.117601]  ? _ncsli_malloc+0xb9/0xd0 [ncsl]
+Dec 15 16:53:47 NCLIM014 kernel: [   18.117616]  ncsli_mmgt_work+0x193/0x280 [ncsl]
+Dec 15 16:53:47 NCLIM014 kernel: [   18.117632]  process_one_work+0x1e2/0x3b0
+Dec 15 16:53:47 NCLIM014 kernel: [   18.117637]  ? rescuer_thread+0x390/0x390
+Dec 15 16:53:47 NCLIM014 kernel: [   18.117639]  worker_thread+0x50/0x3a0
+Dec 15 16:53:47 NCLIM014 kernel: [   18.117642]  ? rescuer_thread+0x390/0x390
+Dec 15 16:53:47 NCLIM014 kernel: [   18.117644]  kthread+0xd6/0x100
+Dec 15 16:53:47 NCLIM014 kernel: [   18.117648]  ? kthread_complete_and_exit+0x20/0x20
+Dec 15 16:53:47 NCLIM014 kernel: [   18.117653]  ret_from_fork+0x1f/0x30
+Dec 15 16:53:47 NCLIM014 kernel: [   18.117659]  </TASK>
+Dec 15 16:53:47 NCLIM014 kernel: [   18.119469] BUG: workqueue leaked lock or atomic: kworker/u64:6/0x7fffffff/409
+Dec 15 16:53:47 NCLIM014 kernel: [   18.119469]      last function: ncsli_mmgt_work [ncsl]
+Dec 15 16:53:47 NCLIM014 kernel: [   18.119484] CPU: 6 PID: 409 Comm: kworker/u64:6 Kdump: loaded Tainted: G        W  OE      6.1.157-clim-2-amd64 #1
+Dec 15 16:53:47 NCLIM014 kernel: [   18.119486] Hardware name: HPE ProLiant DL380 Gen11/ProLiant DL380 Gen11, BIOS 2.50 04/22/2025
+Dec 15 16:53:47 NCLIM014 kernel: [   18.119487] Workqueue: ncsl_gen_work ncsli_mmgt_work [ncsl]
+Dec 15 16:53:47 NCLIM014 kernel: [   18.119500] Call Trace:
+Dec 15 16:53:47 NCLIM014 kernel: [   18.119500]  <TASK>
+Dec 15 16:53:47 NCLIM014 kernel: [   18.119501]  dump_stack_lvl+0x45/0x5e
+Dec 15 16:53:47 NCLIM014 kernel: [   18.119504]  process_one_work.cold+0x2b/0x3c
+Dec 15 16:53:47 NCLIM014 kernel: [   18.119508]  ? rescuer_thread+0x390/0x390
+Dec 15 16:53:47 NCLIM014 kernel: [   18.119510]  worker_thread+0x50/0x3a0
+Dec 15 16:53:47 NCLIM014 kernel: [   18.119512]  ? rescuer_thread+0x390/0x390
+Dec 15 16:53:47 NCLIM014 kernel: [   18.119514]  kthread+0xd6/0x100
+Dec 15 16:53:47 NCLIM014 kernel: [   18.119517]  ? kthread_complete_and_exit+0x20/0x20
+Dec 15 16:53:47 NCLIM014 kernel: [   18.119521]  ret_from_fork+0x1f/0x30
+Dec 15 16:53:47 NCLIM014 kernel: [   18.119525]  </TASK>
+Dec 15 16:53:47 NCLIM014 kernel: [   18.119529] BUG: scheduling while atomic: kworker/u64:6/409/0x00000000
+
+Dec 15 16:53:47 NCLIM014 kernel: [   18.119658] CPU: 6 PID: 409 Comm: kworker/u64:6 Kdump: loaded Tainted: G        W  OE      6.1.157-clim-2-amd64 #1
+Dec 15 16:53:47 NCLIM014 kernel: [   18.119660] Hardware name: HPE ProLiant DL380 Gen11/ProLiant DL380 Gen11, BIOS 2.50 04/22/2025
+Dec 15 16:53:47 NCLIM014 kernel: [   18.119661] Workqueue: ncsl_gen_work ncsli_mmgt_work [ncsl]
+Dec 15 16:53:47 NCLIM014 kernel: [   18.119674] Call Trace:
+Dec 15 16:53:47 NCLIM014 kernel: [   18.119675]  <TASK>
+Dec 15 16:53:47 NCLIM014 kernel: [   18.119676]  dump_stack_lvl+0x45/0x5e
+Dec 15 16:53:47 NCLIM014 kernel: [   18.119679]  __schedule_bug.cold+0x42/0x4e
+Dec 15 16:53:47 NCLIM014 kernel: [   18.119682]  __schedule+0xecc/0x1280
+Dec 15 16:53:47 NCLIM014 kernel: [   18.119686]  ? lock_timer_base+0x61/0x80
+Dec 15 16:53:47 NCLIM014 kernel: [   18.119690]  ? __mod_timer+0x26a/0x400
+Dec 15 16:53:47 NCLIM014 kernel: [   18.119692]  schedule+0x5a/0xd0
+Dec 15 16:53:47 NCLIM014 kernel: [   18.119696]  schedule_timeout+0x88/0x160
+Dec 15 16:53:47 NCLIM014 kernel: [   18.119700]  ? timer_migration_handler+0x90/0x90
+Dec 15 16:53:47 NCLIM014 kernel: [   18.119703]  __wait_for_common+0x90/0x1d0
+Dec 15 16:53:47 NCLIM014 kernel: [   18.119706]  ? usleep_range_state+0x90/0x90
+Dec 15 16:53:47 NCLIM014 kernel: [   18.119711]  cmd_exec+0x675/0xb70 [mlx5_core]
+Dec 15 16:53:47 NCLIM014 kernel: [   18.119783]  ? _printk+0x58/0x73
+Dec 15 16:53:47 NCLIM014 kernel: [   18.119788]  mlx5_cmd_do+0x1e/0x40 [mlx5_core]
+Dec 15 16:53:47 NCLIM014 kernel: [   18.119864]  mlx5_cmd_exec+0x18/0x30 [mlx5_core]
+Dec 15 16:53:47 NCLIM014 kernel: [   18.119947]  mlx5_ib_alloc_pd+0x124/0x170 [mlx5_ib]
+Dec 15 16:53:47 NCLIM014 kernel: [   18.119969]  __ib_alloc_pd+0x69/0x180 [ib_core]
+Dec 15 16:53:47 NCLIM014 kernel: [   18.119996]  rs_ib_alloc_pd+0x33/0x1a0 [ncsl]
+Dec 15 16:53:47 NCLIM014 kernel: [   18.120010]  ncsli_mmgt_work+0x7f/0x280 [ncsl]
+Dec 15 16:53:47 NCLIM014 kernel: [   18.120024]  process_one_work+0x1e2/0x3b0
+Dec 15 16:53:47 NCLIM014 kernel: [   18.120027]  ? rescuer_thread+0x390/0x390
+Dec 15 16:53:47 NCLIM014 kernel: [   18.120029]  worker_thread+0x50/0x3a0
+Dec 15 16:53:47 NCLIM014 kernel: [   18.120031]  ? rescuer_thread+0x390/0x390
+Dec 15 16:53:47 NCLIM014 kernel: [   18.120033]  kthread+0xd6/0x100
+Dec 15 16:53:47 NCLIM014 kernel: [   18.120037]  ? kthread_complete_and_exit+0x20/0x20
+Dec 15 16:53:47 NCLIM014 kernel: [   18.120041]  ret_from_fork+0x1f/0x30
+Dec 15 16:53:47 NCLIM014 kernel: [   18.120046]  </TASK>
+Dec 15 16:53:47 NCLIM014 kernel: [   18.120600] BUG: scheduling while atomic: kworker/u64:6/409/0x00000002
+
+ec 15 11:28:06 NCLIM007 kernel: [   11.071764] Call Trace:
+Dec 15 11:28:06 NCLIM007 kernel: [   11.071764]  <TASK>
+Dec 15 11:28:06 NCLIM007 kernel: [   11.071765]  cfomnet_init+0x71/0x100 [climfom]
+Dec 15 11:28:06 NCLIM007 kernel: [   11.071770]  ops_init+0x3b/0x150
+Dec 15 11:28:06 NCLIM007 kernel: [   11.071773]  setup_net+0x17e/0x350
+Dec 15 11:28:06 NCLIM007 kernel: [   11.071775]  copy_net_ns+0x129/0x2b0
+Dec 15 11:28:06 NCLIM007 kernel: [   11.071777]  create_new_namespaces+0x113/0x2e0
+Dec 15 11:28:06 NCLIM007 kernel: [   11.071779]  unshare_nsproxy_namespaces+0x55/0xb0
+Dec 15 11:28:06 NCLIM007 kernel: [   11.071780]  ksys_unshare+0x166/0x3a0
+Dec 15 11:28:06 NCLIM007 kernel: [   11.071782]  __x64_sys_unshare+0xe/0x20
+Dec 15 11:28:06 NCLIM007 kernel: [   11.071783]  do_syscall_64+0x33/0xb0
+Dec 15 11:28:06 NCLIM007 kernel: [   11.071785]  entry_SYSCALL_64_after_hwframe+0x6e/0xd8
+Dec 15 11:28:06 NCLIM007 kernel: [   11.071787] RIP: 0033:0x7fa8a4bf3817
+Dec 15 11:28:06 NCLIM007 kernel: [   11.071789] Code: 73 01 c3 48 8b 0d 79 16 0d 00 f7 d8 64 89 01 48 83 c8 ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 b8 10 01 00 00 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d 49 16 0d 00 f7 d8 64 89 01 48
+Dec 15 11:28:06 NCLIM007 kernel: [   11.071789] RSP: 002b:00007ffcf485ace8 EFLAGS: 00000217 ORIG_RAX: 0000000000000110
+Dec 15 11:28:06 NCLIM007 kernel: [   11.071790] RAX: ffffffffffffffda RBX: 000056180466a6b0 RCX: 00007fa8a4bf3817
+Dec 15 11:28:06 NCLIM007 kernel: [   11.071791] RDX: 0000000000080000 RSI: 000056180464aa5d RDI: 0000000040000000
+Dec 15 11:28:06 NCLIM007 kernel: [   11.071792] RBP: 0000000000000005 R08: 0000000000000000 R09: 00007ffcf485ab70
+Dec 15 11:28:06 NCLIM007 kernel: [   11.071792] R10: 0000000000000000 R11: 0000000000000217 R12: 0000000000000000
+Dec 15 11:28:06 NCLIM007 kernel: [   11.071793] R13: 00007ffcf485cee0 R14: 0000000000000001 R15: 00007ffcf485ad10
+Dec 15 11:28:06 NCLIM007 kernel: [   11.071793]  </TASK>
+Dec 15 11:28:06 NCLIM007 kernel: [   11.071794] ---[ end trace 0000000000000000 ]---
+Dec 15 11:28:06 NCLIM007 systemd-udevd[486]: Using default interface naming scheme 'v247'.
+Dec 15 11:28:06 NCLIM007 systemd-udevd[486]: ethtool: autonegotiation is unset or enabled, the speed and duplex are not writable.
+....
+etc.
