@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: kernel-analyzer-api
+    runtime: python
+    pythonVersion: 3.11
+    startCommand: uvicorn backend:app --host 0.0.0.0 --port $PORT
+    rootDir: .
+    envVars:
+      - key: ANTHROPIC_API_KEY
+        scope: build,runtime
+        sync: false
